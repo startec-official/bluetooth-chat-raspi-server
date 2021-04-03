@@ -1,5 +1,4 @@
 var cors = require('cors');
-const { spawn, execSync, execFile, exec } = require("child_process");
 const app = require('express')();
 const SerialPort = require('serialport')
 const btPort = new SerialPort('/dev/rfcomm0', {
@@ -30,6 +29,7 @@ io.on('connection', (socket) => {
 });
 
 btPort.open(function (err) {
+    console.log('port opened');
     btPort.on('data', function (data) {
         if (data.toString().indexOf('\n') < 0)
             io.emit('chat message', data);
